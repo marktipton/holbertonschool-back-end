@@ -6,6 +6,11 @@ returns information about his/her TODO list progress.
 import sys
 import requests
 
+
+"""
+using a sample REST API, for a given employee ID,
+returns information about his/her TODO list progress.
+"""
 get_employee = requests.get("https://jsonplaceholder.typicode.com/users")
 get_todos = requests.get("https://jsonplaceholder.typicode.com/todos")
 # print(get_employee.status_code)
