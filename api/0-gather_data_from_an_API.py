@@ -6,6 +6,7 @@ returns information about his/her TODO list progress.
 import requests
 import sys
 
+
 def gather_data():
     """
     using a sample REST API, for a given employee ID,
@@ -21,7 +22,7 @@ def gather_data():
     # initialize variables
     employee_counts = {}
     comp_tasks = 0
-    tot_tasks = 0
+    total = 0
     # cannot iterate over response object directly so store in another variable
     todos_data = get_todos.json()
     employee_data = get_employee.json()
@@ -33,7 +34,6 @@ def gather_data():
     user_id_index = user_id + 1
     employee_counts[user_id_index] = {"completed": 0, "total": 0}
 
-
     for todo in todos_data:
         if user_id_index == todo["userId"]:
 
@@ -43,15 +43,15 @@ def gather_data():
                 employee_counts[user_id_index]["completed"] += 1
 
     comp_tasks = employee_counts[user_id_index]["completed"]
-    tot_tasks = employee_counts[user_id_index]["total"]
+    total = employee_counts[user_id_index]["total"]
     # print first line
     print(
-        f'Employee {employee_name} is done with tasks({comp_tasks}/{tot_tasks}):'
+        f'Employee {employee_name} is done with tasks({comp_tasks}/{total}):'
     )
 
     for todo in todos_data:
         if todo["completed"] and user_id_index == todo["userId"]:
-            print(f'     {todo["title"]}')
+            print(f'\t {todo["title"]}')
 
 
 if __name__ == "__main__":
