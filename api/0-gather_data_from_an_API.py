@@ -3,6 +3,7 @@
 using a sample REST API, for a given employee ID,
 returns information about his/her TODO list progress.
 """
+import sys
 import requests
 
 get_employee = requests.get("https://jsonplaceholder.typicode.com/users")
@@ -12,8 +13,8 @@ get_todos = requests.get("https://jsonplaceholder.typicode.com/todos")
 
 # print(get_todos.status_code)
 # print(get_todos.json())
-
-employee_name = get_employee.json()[0]['name']
+user_id = int(sys.argv[1]) - 1
+employee_name = get_employee.json()[user_id]['name']
 
 employee_counts = {}
 comp_tasks = 0
@@ -23,19 +24,24 @@ tot_tasks = 0
 todos_data = get_todos.json()
 employee_data = get_employee.json()
 
-for employee in employee_data:
-    user_id = employee["id"]
-    employee_counts[user_id] = {"completed": 0, "total": 0}
+# for employee in employee_data:
+#     user_id = employee["id"]
+
+# recorrect user index from argv
+user_id_index = user_id + 1
+employee_counts[user_id_index] = {"completed": 0, "total": 0}
 
 for todo in todos_data:
-    user_id = todo["userId"]
+    if user_id_index == todo["userId"]:
 
-    employee_counts[user_id]["total"] += 1
+        employee_counts[user_id_index]["total"] += 1
 
-    if todo["completed"]:
-        employee_counts[user_id]["completed"] += 1
+        if todo["completed"]:
+            employee_counts[user_id_index]["completed"] += 1
 
-comp_tasks = employee_counts[user_id]["completed"]
-tot_tasks = employee_counts[user_id]["total"]
+comp_tasks = employee_counts[user_id_index]["completed"]
+tot_tasks = employee_counts[user_id_index]["total"]
 
-print(f'Employee {employee_name} is done with tasks({comp_tasks}/{tot_tasks})')
+print(
+    f'Employee {employee_name} is done with tasks({comp_tasks}/{tot_tasks}):'
+)
