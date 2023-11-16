@@ -21,6 +21,7 @@ def gather_data():
 
     user_id = int(sys.argv[1]) - 1
     employee_name = get_employee.json()[user_id]['name']
+    user_name = get_employee.json()[user_id]['username']
 
     # initialize variables
     employee_counts = {}
@@ -42,9 +43,9 @@ def gather_data():
     for todo in todos_data:
         if user_id_index == todo["userId"]:
             task_info = {
-                "username": employee_name,
                 "task": todo["title"],
-                "completed": todo["completed"]
+                "completed": todo["completed"],
+                "username": user_name
             }
             tasks.append(task_info)
 
