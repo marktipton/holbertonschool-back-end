@@ -42,9 +42,9 @@ def gather_data():
     for todo in todos_data:
         if user_id_index == todo["userId"]:
             task_info = {
+                "username": employee_name,
                 "task": todo["title"],
-                "completed": todo["completed"],
-                "username": employee_name
+                "completed": todo["completed"]
             }
             tasks.append(task_info)
 
