@@ -28,12 +28,12 @@ def gather_data():
     # cannot iterate over response object directly so store in another variable
     todos_data = get_todos.json()
     employee_data = get_employee.json()
-    csv_filename = f"USER_ID.csv"
     # for employee in employee_data:
     #     user_id = employee["id"]
 
     # recorrect user index from argv
     user_id_index = user_id + 1
+    csv_filename = f"{user_id_index}.csv"
     # employee_counts[user_id_index] = {"completed": 0, "total": 0}
 
     # for todo in todos_data:
