@@ -4,6 +4,7 @@ using a sample REST API, for a given employee ID,
 returns information about his/her TODO list progress.
 extend previous script to export data in the CSV format.
 """
+import csv
 import requests
 import sys
 
@@ -27,33 +28,35 @@ def gather_data():
     # cannot iterate over response object directly so store in another variable
     todos_data = get_todos.json()
     employee_data = get_employee.json()
-
+    csv_filename = f"USER_ID.csv"
     # for employee in employee_data:
     #     user_id = employee["id"]
 
     # recorrect user index from argv
-    user_id_index = user_id + 1
-    employee_counts[user_id_index] = {"completed": 0, "total": 0}
+    # user_id_index = user_id + 1
+    # employee_counts[user_id_index] = {"completed": 0, "total": 0}
 
-    for todo in todos_data:
-        if user_id_index == todo["userId"]:
+    # for todo in todos_data:
+    #     if user_id_index == todo["userId"]:
 
-            employee_counts[user_id_index]["total"] += 1
+    #         employee_counts[user_id_index]["total"] += 1
 
-            if todo["completed"]:
-                employee_counts[user_id_index]["completed"] += 1
+    #         if todo["completed"]:
+    #             employee_counts[user_id_index]["completed"] += 1
 
-    comp_tasks = employee_counts[user_id_index]["completed"]
-    total = employee_counts[user_id_index]["total"]
-    # print first line
-    print(
-        f'Employee {employee_name} is done with tasks({comp_tasks}/{total}):'
-    )
+    # comp_tasks = employee_counts[user_id_index]["completed"]
+    # total = employee_counts[user_id_index]["total"]
+    # # print first line
+    # print(
+    #     f'Employee {employee_name} is done with tasks({comp_tasks}/{total}):'
+    # )
 
-    for todo in todos_data:
-        if todo["completed"] and user_id_index == todo["userId"]:
-            print(f'\t {todo["title"]}')
-
+    # for todo in todos_data:
+    #     if todo["completed"] and user_id_index == todo["userId"]:
+    #         print(f'\t {todo["title"]}')
+    with open(csv_filename, mode='w', newline='') as csv_file:
+        fieldnames = []
+        writer = csv.DictWriter
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
