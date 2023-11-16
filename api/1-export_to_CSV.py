@@ -20,7 +20,7 @@ def gather_data():
 
     user_id = int(sys.argv[1]) - 1
     employee_name = get_employee.json()[user_id]['name']
-
+    user_name = get_employee.json()[user_id]['username']
     # initialize variables
     employee_counts = {}
     comp_tasks = 0
@@ -33,7 +33,7 @@ def gather_data():
     #     user_id = employee["id"]
 
     # recorrect user index from argv
-    # user_id_index = user_id + 1
+    user_id_index = user_id + 1
     # employee_counts[user_id_index] = {"completed": 0, "total": 0}
 
     # for todo in todos_data:
@@ -55,8 +55,18 @@ def gather_data():
     #     if todo["completed"] and user_id_index == todo["userId"]:
     #         print(f'\t {todo["title"]}')
     with open(csv_filename, mode='w', newline='') as csv_file:
-        fieldnames = []
-        writer = csv.DictWriter
+        # fieldnames = []
+        writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+
+        for todo in todos_data:
+            if user_id_index == todo["userId"]:
+                writer.writerow([
+                    str(user_id_index),
+                    str(user_name),
+                    str(todo["completed"]),
+                    str(todo["title"])
+                ])
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
