@@ -18,7 +18,6 @@ employee_name = get_employee.json()[user_id]['name']
 
 employee_counts = {}
 comp_tasks = 0
-
 tot_tasks = 0
 # cannot iterate over response object directly so store in another variable
 todos_data = get_todos.json()
@@ -45,3 +44,7 @@ tot_tasks = employee_counts[user_id_index]["total"]
 print(
     f'Employee {employee_name} is done with tasks({comp_tasks}/{tot_tasks}):'
 )
+
+for todo in todos_data:
+    if todo["completed"] and user_id_index == todo["userId"]:
+        print(f'     {todo["title"]}')
