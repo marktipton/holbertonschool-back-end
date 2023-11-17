@@ -5,8 +5,8 @@ returns information about his/her TODO list progress.
 extends previous script to export data in the JSON format.
 but now for all employees instead of one
 """
+import json
 import requests
-import sys
 
 
 def gather_data():
@@ -18,45 +18,36 @@ def gather_data():
     get_employee = requests.get("https://jsonplaceholder.typicode.com/users")
     get_todos = requests.get("https://jsonplaceholder.typicode.com/todos")
 
-    user_id = int(sys.argv[1]) - 1
-    employee_name = get_employee.json()[user_id]['name']
+    user_name = get_employee.json()[0]['username']
 
     # initialize variables
     employee_counts = {}
-    comp_tasks = 0
-    total = 0
+
     # cannot iterate over response object directly so store in another variable
     todos_data = get_todos.json()
     employee_data = get_employee.json()
 
-    # for employee in employee_data:
-    #     user_id = employee["id"]
+    all_employees_tasks = {}
 
-    # recorrect user index from argv
-    user_id_index = user_id + 1
-    employee_counts[user_id_index] = {"completed": 0, "total": 0}
+    for employee in employee_data:
+        tasks = []
+        user_id = employee["id"]
 
-    for todo in todos_data:
-        if user_id_index == todo["userId"]:
+        for todo in todos_data:
+            task_info = {
+                "task": todo["title"],
+                "completed": todo["completed"],
+                "username": user_name
+            }
+            tasks.append(task_info)
 
-            employee_counts[user_id_index]["total"] += 1
+        all_employees_tasks[str(user_id)] = tasks
 
-            if todo["completed"]:
-                employee_counts[user_id_index]["completed"] += 1
+    filename = f"todo_all_employees.json"
 
-    comp_tasks = employee_counts[user_id_index]["completed"]
-    total = employee_counts[user_id_index]["total"]
-    # print first line
-    print(
-        f'Employee {employee_name} is done with tasks({comp_tasks}/{total}):'
-    )
-
-    for todo in todos_data:
-        if todo["completed"] and user_id_index == todo["userId"]:
-            print(f'\t {todo["title"]}')
+    with open(filename, 'w') as json_file:
+        json.dump(all_employees_tasks, json_file, indent=2)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        sys.exit(1)
     gather_data()
