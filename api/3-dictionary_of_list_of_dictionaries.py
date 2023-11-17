@@ -35,9 +35,9 @@ def gather_data():
 
         for todo in todos_data:
             task_info = {
+                "username": employee["username"],
                 "task": todo["title"],
-                "completed": todo["completed"],
-                "username": user_name
+                "completed": todo["completed"]
             }
             tasks.append(task_info)
 
