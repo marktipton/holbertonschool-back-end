@@ -34,7 +34,7 @@ def gather_data():
         user_id = employee["id"]
         for todo in todos_data:
             if todo["userId"] != user_id:
-                break
+                continue
             task_info = {
                 "username": employee["username"],
                 "task": todo["title"],
