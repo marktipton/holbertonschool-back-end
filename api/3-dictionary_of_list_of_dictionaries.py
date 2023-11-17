@@ -46,7 +46,7 @@ def gather_data():
     filename = f"todo_all_employees.json"
 
     with open(filename, 'w') as json_file:
-        json.dump(all_employees_tasks, json_file, indent=2)
+        json.dump(all_employees_tasks, json_file)
 
 
 if __name__ == "__main__":
